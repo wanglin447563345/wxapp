@@ -1,10 +1,14 @@
 // We only need to import the modules necessary for initial render
-import CoreLayout from '../layouts/CoreLayout'
-import Home from './Home'
-import CounterRoute from './Counter'
-import ZenRoute from './Zen'
-import ElapseRoute from './Elapse'
-import RouteRoute from './Route'
+import Layout from '../layouts'
+import Basic from './Basic'
+import List from './List'
+import Map from './Map'
+import Help from './Help'
+import User from './User'
+import Login from './Login'
+import SelectImport from './SelectImport'
+import CreateFirst from './CreateFirst'
+import PlantBasic from './PlantDetail/PlantBasic'
 import PageNotFound from './PageNotFound'
 import Redirect from './PageNotFound/redirect'
 
@@ -13,34 +17,20 @@ import Redirect from './PageNotFound/redirect'
 
 export const createRoutes = (store) => ({
   path: '/',
-  component: CoreLayout,
-  indexRoute: Home,
+  component: Layout,
+  indexRoute: Basic,
   childRoutes: [
-    CounterRoute(store),
-    ZenRoute(store),
-    ElapseRoute(store),
-    RouteRoute(store),
+    List(store),
+    Map(store),
+    Help(store),
+    User(store),
+    Login(store),
+    SelectImport(store),
+    CreateFirst(store),
+    PlantBasic(store),
     PageNotFound(),
     Redirect
   ]
 })
-
-/*  Note: childRoutes can be chunked or otherwise loaded programmatically
-    using getChildRoutes with the following signature:
-
-    getChildRoutes (location, cb) {
-      require.ensure([], (require) => {
-        cb(null, [
-          // Remove imports!
-          require('./Counter').default(store)
-        ])
-      })
-    }
-
-    However, this is not necessary for code-splitting! It simply provides
-    an API for async route definitions. Your code splitting should occur
-    inside the route `getComponent` function, since it is only invoked
-    when the route exists and matches.
-*/
 
 export default createRoutes

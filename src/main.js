@@ -3,6 +3,9 @@ import ReactDOM from 'react-dom'
 import createStore from './store/createStore'
 import AppContainer from './containers/AppContainer'
 
+// if (window.location.pathname.indexOf('/login') < 1) {
+//   browserHistory.push('/login')
+// }
 // ========================================================
 // Store Instantiation
 // ========================================================

@@ -76,6 +76,7 @@
   "author": "Nobody <az8321550@gmail.com> (https://bodyno.com)",
   "license": "WTFPL",
   "dependencies": {
+    "antd-mobile": "^2.0.2",
     "babel-core": "^6.17.0",
     "babel-loader": "^6.2.5",
     "babel-plugin-transform-runtime": "^6.15.0",
@@ -87,6 +88,7 @@
     "css-loader": "^0.26.0",
     "cssnano": "^3.7.4",
     "debug": "^2.2.0",
+    "echarts": "^3.8.2",
     "extract-text-webpack-plugin": "^1.0.0",
     "file-loader": "^0.9.0",
     "fs-extra": "^1.0.0",
@@ -98,6 +100,7 @@
     "normalize.css": "^5.0.0",
     "postcss-loader": "^1.1.0",
     "prop-types": "^15.5.10",
+    "rc-form": "^2.0.0",
     "react": "^15.0.0",
     "react-dom": "^15.0.0",
     "react-redux": "^5.0.1",
@@ -114,6 +117,7 @@
   },
   "devDependencies": {
     "babel-eslint": "^7.1.0",
+    "babel-plugin-import": "^1.6.2",
     "babel-plugin-istanbul": "^3.0.0",
     "chai": "^3.4.1",
     "chai-as-promised": "^6.0.0",
