@@ -1,0 +1,89 @@
+.list_items{
+  overflow: auto;
+  margin-top: 50px;
+  padding-bottom: 58px;
+  .am-list-body{
+    background: #EFEFEF !important;
+    div{
+      .am-swipe{
+        margin-top: 8px;
+        .am-swipe-content{
+          .am-list-item{
+            padding:0;
+            .am-list-line{
+              padding:0;
+              .list_item_header{
+                display: flex;
+                justify-content: center;
+                border-bottom: 1px solid #efefef;
+                align-items: center;
+                height: 48px;
+                padding: 0 12px;
+                p{
+                  display: flex;
+                  align-items: center;
+                  color: #79909B;
+                  img{
+                    margin-right: 8px;
+                  }
+                }
+              }
+              .list_item_bottom{
+                display: flex;
+                align-items: center;
+                .img{
+                  height: 100px;
+                  width: 100px;
+                  border-radius: 50%;
+                  overflow: hidden;
+                  margin: 0 12px;
+                  flex-grow:0;
+                  img{
+                    height: 100%;
+                    width:100%;
+                  }
+                }
+                div{
+                  flex-grow: 1;
+                  p{
+                    display: flex;
+                    align-items: center;
+                    margin:0;
+                    img{
+                      margin:6px 8px 6px 0;
+                      width: 20px;
+                    }
+                    span{
+                      flex: 3 !important;
+                      font-size: 14px;
+                    }
+                    .power{
+                      flex: 2 !important;
+                      color: #50AE55;
+                    }
+                    .system_size{
+                      flex: 2 !important;
+                      color: #AA4CBA;
+                    }
+                    .total_energy{
+                      flex: 2 !important;
+                      color: #1BACC0;
+                    }
+                    .todays_income{
+                      flex: 2 !important;
+                      color: #F98C24;
+                    }
+                    .total_income{
+                      flex: 2 !important;
+                      color: #F1522C;
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

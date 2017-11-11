@@ -1,0 +1,26 @@
+.header{
+  display: flex;
+  position: relative;
+  height: 40px;
+  background: #039BE5 ;
+  color: #ffffff;
+  span{
+    position: absolute;
+    top:9px;
+    left: 15px;
+    display: inline-flex;
+    align-items: center;
+    img{
+      height:22px;
+      width:22px;
+    }
+  }
+
+  p{
+    width: 100%;
+    text-align: center;
+    margin:0;
+    line-height: 40px;
+    font-size: 15px;
+  };
+}

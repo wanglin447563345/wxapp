@@ -1,0 +1,15 @@
+.container{
+  display: flex;
+  flex-direction:column;
+  text-align: center;
+  margin:auto;
+  img{
+    width: 100%;
+    max-width: 620px;
+    height: auto;
+  }
+  .link{
+    cursor: pointer;
+  }
+}
+

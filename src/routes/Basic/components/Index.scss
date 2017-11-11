@@ -1,0 +1,74 @@
+.basic{
+  height: 100%;
+  min-height: 500px;
+  .dashChart{
+    height:30%;
+    background:-moz-linear-gradient(right, #3A3B5E, #666889);/*moz*/
+    background:-webkit-linear-gradient(right, #3A3B5E, #666889);/*chrome safari*/
+  }
+  .myTab{
+    position: relative;
+    height: 40%;
+    margin:2% 2% 2% 0;
+    background: #fff;
+    p{
+      position: absolute;
+      top:0;
+      left: 0;
+      width:38%;
+      margin:4px 0;
+      line-height: 31px;
+      text-align: center;
+      font-size: 16px;
+      span{
+        color: #039BE5;
+      }
+    }
+    .am-tabs{
+      position: absolute;
+      top: 0;
+      left: 0;
+      overflow: hidden;
+      .am-tabs-tab-bar-wrap{
+        .am-tabs-default-bar{
+          width: 62%;
+          float: right;
+          .am-tabs-default-bar-content{
+            padding: 6px 0;
+            .am-tabs-default-bar-tab{
+              font-size: 15px;
+              color: #79909B;
+              border:none;
+              height:31px;
+              &:after{
+                height:0;
+              }
+            }
+            .am-tabs-default-bar-tab-active{
+              color: #fff;
+              background: #039BE5;
+            }
+          }
+        }
+        .am-tabs-default-bar-underline{
+          border: none;
+        }
+      }
+      .am-tabs-content-wrap{
+        .am-tabs-pane-wrap{
+          .tab_content{
+            display: flex;
+            align-items: center;
+            justify-items: center;
+            height: 100%;
+            overflow: hidden;
+          }
+        }
+      }
+    }
+  }
+  .basic_items{
+    height: 18%;
+    overflow: hidden;
+  }
+}

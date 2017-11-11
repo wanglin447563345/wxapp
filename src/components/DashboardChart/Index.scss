@@ -1,0 +1,25 @@
+.myDash{
+  display: flex;
+  align-items: center;
+  height: 100%;
+  #main{
+    align-items: center;
+    flex-grow: 0;
+  }
+  .dashData{
+    text-align: center;
+    flex-grow:1;
+    padding-top: 30px;
+    img{
+      width: 44px;
+      height: 44px;
+    }
+    p{
+      color: #FFEE58;
+      font-size: 12px;
+    }
+    span{
+      color: #FFFFFF;
+    }
+  }
+}
