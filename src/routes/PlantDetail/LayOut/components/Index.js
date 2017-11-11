@@ -1,14 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Footer from '../../components/Footer'
+import DetailFooter from './DetailFooter/Index'
 import './Index.scss'
-import '../../styles/core.scss'
+import '../../../../styles/core.scss'
 
-class CoreLayout extends React.Component {
+class LayOut extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
-      isShow: true
+      is_Show: true
     }
   }
   render () {
@@ -18,19 +18,19 @@ class CoreLayout extends React.Component {
         <div className='core-layout__viewport'>
           {children}
         </div>
-        {this.state.isShow ? <Footer location={location} /> : null }
+        {this.state.is_Show ? <DetailFooter location={location} /> : null }
       </div>
     )
   }
   componentDidMount () {
     const { pathname } = this.props.location
-    if (pathname === '/wx/' || pathname === '/wx/list' || pathname === '/wx/add' || pathname === '/wx/help' || pathname === '/wx/user') {
+    if (pathname === '/wx/detail/basic' || pathname === '/wx/detail/list' || pathname === '/wx/detail/add' || pathname === '/wx/detail/analysis' || pathname === '/wx/detail/warn') {
       this.setState({
-        isShow: true
+        is_Show: true
       })
     } else {
       this.setState({
-        isShow: false
+        is_Show: false
       })
     }
   }
@@ -39,13 +39,13 @@ class CoreLayout extends React.Component {
     const { pathname } = this.props.location
     const nextPath = nextProps.location.pathname
     if (pathname !== nextPath) {
-      if (nextPath === '/wx/' || nextPath === '/wx/list' || nextPath === '/wx/add' || nextPath === '/wx/help' || nextPath === '/wx/user') {
+      if (nextPath === '/wx/detail/basic' || nextPath === '/wx/detail/list' || nextPath === '/wx/detail/add' || nextPath === '/wx/detail/analysis' || nextPath === '/wx/detail/warn') {
         this.setState({
-          isShow: true
+          is_Show: true
         })
       } else {
         this.setState({
-          isShow: false
+          is_Show: false
         })
       }
     }
@@ -53,9 +53,9 @@ class CoreLayout extends React.Component {
 
 }
 
-CoreLayout.propTypes = {
+LayOut.propTypes = {
   children: PropTypes.element.isRequired,
   location: PropTypes.object.isRequired
 }
 
-export default CoreLayout
+export default LayOut
