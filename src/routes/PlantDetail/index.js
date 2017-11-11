@@ -1,10 +1,11 @@
 import { injectReducer } from '../../store/reducers'
 
-import PlantBasic from './PlantBasic'
-import PlantList from './PlantList'
-import AddModule from './AddModule'
+import DetailBasic from './DetailBasic'
+import DetailList from './DetailList'
+import Map from './Map'
 import Analysis from './Analysis'
 import Warn from './Warn'
+import AddModule from './AddModule'
 
 export default (store) => ({
   path: 'detail/',
@@ -15,10 +16,11 @@ export default (store) => ({
     })
   },
   childRoutes: [
-    PlantBasic(store),
-    PlantList(store),
-    AddModule(store),
+    DetailBasic(store),
+    DetailList(store),
+    Map(store),
     Analysis(store),
-    Warn(store)
+    Warn(store),
+    AddModule(store)
   ]
 })

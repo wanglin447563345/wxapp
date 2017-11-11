@@ -1,11 +1,16 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import Header from '../../../../components/Header'
 
 class PlantBasic extends React.Component {
   render () {
     const { query } = this.props.location
     return (
-      <div>电站{ query.plant_id }分析</div>
+      <div className='analysis'>
+        <div className='detail_header'>
+          <Header title='电站分析' />
+        </div>
+      </div>
     )
   }
 }

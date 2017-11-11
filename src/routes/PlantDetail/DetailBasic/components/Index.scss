@@ -1,0 +1,23 @@
+@import '../../../Basic/components/Index.scss';
+.detail_header{
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 999;
+}
+.detail_dash_chart{
+  margin-top: 40px;
+}
+.detail_basic_items{
+  margin-top: 2%;
+}
+.plant_basic_tab{
+  margin-top: 1% !important;
+  .am-tabs{
+    .am-tabs-tab-bar-wrap{
+      .am-tabs-default-bar{
+        width:100% !important;
+      }
+    }
+  }
+}

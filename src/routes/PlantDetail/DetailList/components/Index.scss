@@ -1,0 +1,29 @@
+@import '../../../List/components/Index.scss';
+.module_list{
+  margin-top: 90px;
+  .detail_header{
+    position: fixed;
+    top:0;
+    width: 100%;
+    z-index: 999;
+  }
+  .module_search{
+    margin-top: 40px;
+    .am-search{
+      left: 8px;
+    }
+    .add_module{
+      position: absolute;
+      right: 0;
+      padding:0 8px;
+      text-align: center;
+      color: #039BE5;
+      font-size: 13px;
+      img{
+        height: 24px;
+        width:24px;
+      }
+    }
+  }
+}
+

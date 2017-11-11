@@ -24,7 +24,7 @@ class LayOut extends React.Component {
   }
   componentDidMount () {
     const { pathname } = this.props.location
-    if (pathname === '/wx/detail/basic' || pathname === '/wx/detail/list' || pathname === '/wx/detail/add' || pathname === '/wx/detail/analysis' || pathname === '/wx/detail/warn') {
+    if (pathname === '/wx/detail/basic' || pathname === '/wx/detail/list' || pathname === '/wx/detail/map' || pathname === '/wx/detail/analysis' || pathname === '/wx/detail/warn') {
       this.setState({
         is_Show: true
       })
@@ -39,7 +39,7 @@ class LayOut extends React.Component {
     const { pathname } = this.props.location
     const nextPath = nextProps.location.pathname
     if (pathname !== nextPath) {
-      if (nextPath === '/wx/detail/basic' || nextPath === '/wx/detail/list' || nextPath === '/wx/detail/add' || nextPath === '/wx/detail/analysis' || nextPath === '/wx/detail/warn') {
+      if (nextPath === '/wx/detail/basic' || nextPath === '/wx/detail/list' || nextPath === '/wx/detail/map' || nextPath === '/wx/detail/analysis' || nextPath === '/wx/detail/warn') {
         this.setState({
           is_Show: true
         })

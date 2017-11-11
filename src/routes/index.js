@@ -2,7 +2,7 @@
 import Layouts from '../layouts'
 import Basic from './Basic'
 import List from './List'
-import Map from './Map'
+import Add from './Add'
 import Help from './Help'
 import User from './User'
 import Login from './Login'
@@ -21,7 +21,7 @@ export const createRoutes = (store) => ({
   indexRoute: Basic,
   childRoutes: [
     List(store),
-    Map(store),
+    Add(store),
     Help(store),
     User(store),
     Login(store),

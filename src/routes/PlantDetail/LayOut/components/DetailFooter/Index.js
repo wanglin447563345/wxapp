@@ -8,8 +8,8 @@ import SITUATION_NOR from './imgs/situation_nor.png'
 import SITUATION_SEL from './imgs/situation_sel.png'
 import LIST2_NOR from './imgs/list2_nor.png'
 import LIST2_SEL from './imgs/list2_sel.png'
-import ADD2_NOR from '../../../../../components/imgs/add_nor.png'
-import ADD2_SEL from '../../../../../components/imgs/add_sel.png'
+import MAP_NOR from './imgs/map2_nor.png'
+import MAP_SEL from './imgs/map2_sel.png'
 import ANALYSIS_NOR from './imgs/analysis_nor.png'
 import ANALYSIS_SEL from './imgs/analysis_sel.png'
 import CAVEAT_NOR from './imgs/caveat_nor.png'
@@ -41,12 +41,12 @@ function DetailFooter ({ location }) {
           onPress={() => browserHistory.push(`/wx/detail/list${location.search}`)}
         />
         <TabBar.Item
-          title='添加'
-          key='添加'
-          icon={ADD2_NOR}
-          selectedIcon={ADD2_SEL}
-          selected={location.pathname === '/wx/detail/add'}
-          onPress={() => browserHistory.push(`/wx/detail/add${location.search}`)}
+          title='地图'
+          key='地图'
+          icon={MAP_NOR}
+          selectedIcon={MAP_SEL}
+          selected={location.pathname === '/wx/detail/map'}
+          onPress={() => browserHistory.push(`/wx/detail/map${location.search}`)}
         />
         <TabBar.Item
           title='分析'
