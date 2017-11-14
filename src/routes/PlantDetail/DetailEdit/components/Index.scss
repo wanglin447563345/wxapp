@@ -1,0 +1,43 @@
+.edit{
+  height: 100%;
+  background: #fff;
+  .edit_avatar{
+    position: relative;
+    height: 30%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background:-moz-linear-gradient(right, #3A3B5E, #666889);/*moz*/
+    background:-webkit-linear-gradient(right, #3A3B5E, #666889);/*chrome safari*/
+    div{
+      position: absolute;
+      top: 0;
+      right: 0;
+      color: #fff;
+      padding:8px 16px;
+    }
+    p{
+      height: 90px;
+      width:90px;
+      border-radius: 50%;
+      overflow: hidden;
+      img{
+        width: 100%;
+        height: 100%;
+      }
+    }
+    span{
+      color: #ffffff;
+    }
+  }
+  .edit_info{
+    height: 70%;
+    p{
+      color: #BDBDBD;
+      background: #FAFAFA;
+      margin:0;
+      padding: 8px 16px;
+    }
+  }
+}

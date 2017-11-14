@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { browserHistory } from 'react-router'
 import PropTypes from 'prop-types'
-import { Carousel, WhiteSpace, Button } from 'antd-mobile'
+import { Carousel } from 'antd-mobile'
 import PLANT from './imgs/plant.png'
 import ADD from './imgs/add.png'
 
@@ -9,7 +9,7 @@ import './Index.scss'
 class Create extends Component {
   render () {
     return (
-      <div className="create">
+      <div className='create'>
         <Carousel
           className="my-carousel"
           autoplay

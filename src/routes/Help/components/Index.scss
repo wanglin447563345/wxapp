@@ -8,7 +8,7 @@
     justify-content: center;
     height: 30%;
     background:-moz-linear-gradient(right, #3A3B5E, #666889);/*moz*/
-    background:-webkit-gradient(linear, 0 0, 0 bottom, from(#3A3B5E), to(#666889));/*chrome safari*/
+    background:-webkit-linear-gradient(right, #3A3B5E, #666889);/*chrome safari*/
     p{
       margin: 4px;
       &:nth-child(1){

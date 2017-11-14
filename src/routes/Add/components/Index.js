@@ -4,7 +4,7 @@ import './Index.scss'
 class Map extends Component {
   render () {
     return (
-      <div>地图</div>
+      <div>添加</div>
     )
   }
 }

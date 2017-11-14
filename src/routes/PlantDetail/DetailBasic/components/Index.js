@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Tabs } from 'antd-mobile'
+import { browserHistory } from 'react-router'
 import Header from '../../../../components/Header'
 import DashChart from '../../../../components/DashboardChart'
 import Items from '../../../../components/Items'
@@ -8,7 +9,9 @@ import DayChart from '../../../../components/DayChart'
 import MonthChart from '../../../../components/MonthChart'
 import YearChart from '../../../../components/YearChart'
 import SumChart from '../../../../components/SumChart'
+import DETAIL_EDIT from './imgs/detail_edit.png'
 import './Index.scss'
+
 
 class DetailBasic extends React.Component {
   render () {
@@ -54,6 +57,9 @@ class DetailBasic extends React.Component {
       <div className='basic detail_basic'>
         <div className='detail_header'>
           <Header title={`${plant_name}概况`} />
+          <p className='basic_edit' onClick={() => { browserHistory.push('/wx/detail/edit') }}>
+            <img src={DETAIL_EDIT} alt='' />编辑
+          </p>
         </div>
         <div className='dashChart detail_dash_chart'>
           <DashChart options={DashOptions} />

@@ -1,0 +1,53 @@
+@import '../../../../List/components/ListItem/Index.scss';
+.warn_list_item{
+  margin-top: 0;
+  .warn_list_item_header{
+    justify-content: space-between !important;
+    .warn_plant_name{
+      color: #383E4F;
+      font-size: 14px;
+      display: flex;
+      align-content: center;
+      img{
+        margin-right: 6px;
+        font-weight: 500;
+      }
+    }
+    .plant_identifier{
+      color: #039BE5;
+      font-size: 12px;
+    }
+  }
+  .warn_list_item_bottom{
+    padding: 0 12px;
+    position: relative;
+    div{
+      &:nth-child(2){
+        position: absolute;
+        top:6px;
+        right:16px;
+        padding:2px 6px;
+        font-size: 12px;
+        border-radius: 2px;
+      }
+      p{
+        .warn_flex1{
+          color: #79909B;
+          flex: 1 !important;
+        }
+        .warn_flex2{
+          flex: 2 !important;
+        }
+      }
+    }
+    .warn_success{
+      border:1px solid #3BCB72;
+      color: #3BCB72;
+    }
+    .warn_fail{
+      border: 1px solid #F46581;
+      color: #F46581;
+    }
+  }
+}
+

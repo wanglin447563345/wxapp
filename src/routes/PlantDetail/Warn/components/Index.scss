@@ -1,0 +1,18 @@
+@import '../../../List/components/Index.scss';
+.warn_list{
+  .detail_header{
+    position: fixed;
+    top: 0;
+    z-index: 999;
+    width: 100%;
+  }
+  .cue{
+    margin-top: 40px;
+    text-align: center;
+    color: #BDBDBD;
+    font-size: 12px;
+    padding:6px;
+  }
+}
+
+

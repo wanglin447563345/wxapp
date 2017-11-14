@@ -6,6 +6,7 @@ import Map from './Map'
 import Analysis from './Analysis'
 import Warn from './Warn'
 import AddModule from './AddModule'
+import DetailEdit from './DetailEdit'
 
 export default (store) => ({
   path: 'detail/',
@@ -21,6 +22,7 @@ export default (store) => ({
     Map(store),
     Analysis(store),
     Warn(store),
-    AddModule(store)
+    AddModule(store),
+    DetailEdit(store)
   ]
 })
