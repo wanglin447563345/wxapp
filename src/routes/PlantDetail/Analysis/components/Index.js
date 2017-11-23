@@ -1,28 +1,36 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { Tabs, DatePicker, List } from 'antd-mobile'
-import enUs from 'antd-mobile/lib/date-picker/locale/en_US'
 import Header from '../../../../components/Header'
 import AnalysisDayChart from './subComponents/AnalysisDayChart'
-// 引入 ECharts 主模块
-import echarts from 'echarts/lib/echarts'
+import MonthBarChart from './subComponents/MonthBarChart'
+import YearBarChart from './subComponents/YearBarChart'
+import SumBarChart from './subComponents/SumBarChart'
+import './Index.scss'
 const nowTimeStamp = Date.now()
 const now = new Date(nowTimeStamp)
+function formatDay (date) {
+  /* eslint no-confusing-arrow: 0 */
+  const pad = n => n < 10 ? `0${n}` : n
+  const dateStr = `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDay() + 1)}`
+  console.log(`${dateStr}`)
+  return `${dateStr}`
+}
 // 月份格式化
 function formatMonth (date) {
   /* eslint no-confusing-arrow: 0 */
-  const pad = n => n < 10 ? `0${n}` : n;
-  const dateStr = `${date.getFullYear()}-${pad(date.getMonth() + 1)}`;
+  const pad = n => n < 10 ? `0${n}` : n
+  const dateStr = `${date.getFullYear()}-${pad(date.getMonth() + 1)}`
   console.log(`${dateStr}`)
-  return `${dateStr}`;
+  return `${dateStr}`
 }
 // 年格式化
 function formatYear (date) {
   /* eslint no-confusing-arrow: 0 */
-  const pad = n => n < 10 ? `0${n}` : n;
-  const dateStr = `${date.getFullYear()}`;
+  const pad = n => n < 10 ? `0${n}` : n
+  const dateStr = `${date.getFullYear()}`
   console.log(`${dateStr}`)
-  return `${dateStr}`;
+  return `${dateStr}`
 }
 class Analysis extends React.Component {
   state = {
@@ -39,7 +47,7 @@ class Analysis extends React.Component {
       { title: '年', sub: '3' },
       { title: '累计', sub: '4' }
     ]
-    const options=[{
+    const options1=[{
       name: '南宁-曼芭',
       type: 'line',
       smooth: true,
@@ -85,6 +93,23 @@ class Analysis extends React.Component {
       },
       data: [84.2,81.0,67.5,72.1,43.7,88.5,91.9,101.8,79.7,87.6,92.9,0]
     }]
+    const options2=[{
+      name: '包租费',
+      type: 'bar',
+      data: [20, 12, 31, 34, 31]
+    }, {
+      name: '装修费',
+      type: 'bar',
+      data: [10, 20, 5, 9, 3]
+    }, {
+      name: '保洁费',
+      type: 'bar',
+      data: [1, 1, 2, 3, 1]
+    }, {
+      name: '物业费',
+      type: 'bar',
+      data: [0.1, 2, 3, 1, 0.5]
+    }]
     return (
       <div className='analysis'>
         <div className='detail_header'>
@@ -102,13 +127,14 @@ class Analysis extends React.Component {
                 <DatePicker
                   mode='date'
                   title='选择日期'
+                  format={(val) => `${formatDay(val)}`}
                   value={this.state.date}
                   onChange={date => this.setState({ date })}
                 >
                   <List.Item arrow='horizontal' >日期</List.Item>
                 </DatePicker>
               </List>
-              <AnalysisDayChart options={options} />
+              <AnalysisDayChart options={options1} />
             </div>
             <div className='tab_content'>
               <List className='date-picker-list' style={{ backgroundColor: 'white' }}>
@@ -122,6 +148,7 @@ class Analysis extends React.Component {
                   <List.Item arrow='horizontal'>月份</List.Item>
                 </DatePicker>
               </List>
+              <MonthBarChart options={options2} />
             </div>
             <div className='tab_content'>
               <List className='date-picker-list' style={{ backgroundColor: 'white' }}>
@@ -135,11 +162,32 @@ class Analysis extends React.Component {
                   <List.Item arrow='horizontal'>年份</List.Item>
                 </DatePicker>
               </List>
+              <YearBarChart options={options2} />
             </div>
             <div className='tab_content'>
-              累计
+              <p className='history_energy'>历年发电量</p>
+              <SumBarChart options={options2} />
             </div>
           </Tabs>
+        </div>
+        <div className='analysis_table'>
+          <table>
+            <thead>
+              <tr>
+                <th>对比</th>
+                <th>设备序列号</th>
+                <th>设备编码</th>
+                <th>采集器编码</th>
+                <th>额定功率</th>
+                <th>机型</th>
+                <th>当日发电量</th>
+                <th>总发电量</th>
+                <th>更新时间</th>
+                <th>链接状态</th>
+              </tr>
+
+            </thead>
+          </table>
         </div>
       </div>
     )

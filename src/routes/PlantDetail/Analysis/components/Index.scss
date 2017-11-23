@@ -1,3 +1,26 @@
-.analysis_tab{
-  margin-top: 40px;
+.analysis{
+  height: 100%;
+  padding: 40px 0 50px;
+  .detail_header{
+    position: fixed;
+    top:0;
+    width: 100%;
+    z-index: 999;
+  }
+  .analysis_tab{
+    height: auto;
+    background: #fff;
+  }
+  .analysis_table{
+    background: #fff;
+    margin-top: 8px;
+  }
+}
+.history_energy{
+  height: 42px;
+  margin:0;
+  text-align: center;
+  line-height: 42px;
+  font-size: 16px;
+  border-bottom: 1px solid #ddd;
 }

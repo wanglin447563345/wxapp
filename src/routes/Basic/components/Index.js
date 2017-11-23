@@ -9,6 +9,9 @@ import SumChart from '../../../components/SumChart/Index'
 import Items from '../../../components/Items/Index'
 import './Index.scss'
 class Basic extends Component {
+  state={
+    isPower:true
+  }
   render () {
     const DashOptions = {
       data:[{ value: 50, name: '使用率' }]
@@ -51,12 +54,12 @@ class Basic extends Component {
           <DashboardChart options={DashOptions} />
         </div>
         <div className='myTab'>
-          <p>发电情况<span>(kWh)</span></p>
+          {this.state.isPower ? <p>实时功率<span>(W)</span></p> : <p>发电量<span>(kWh)</span></p>}
           <Tabs
             tabs={tabs}
             initialPage={0}
             onChange={(tab, index) => { console.log('onChange', index, tab) }}
-            onTabClick={(tab, index) => { console.log('onTabClick', index, tab) }}
+            onTabClick={(tab, index) => this.tabChange(tab, index)}
           >
             <div className='tab_content'>
               <DayChart options={AreaOption} />
@@ -77,6 +80,14 @@ class Basic extends Component {
         </div>
       </div>
     )
+  }
+  // tab切换
+  tabChange=(a, b) => {
+    if (b === 0) {
+      this.setState({ isPower:true })
+    } else {
+      this.setState({ isPower:false })
+    }
   }
 }
 

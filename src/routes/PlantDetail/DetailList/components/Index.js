@@ -20,7 +20,8 @@ class DetailList extends React.Component {
         power:2323,
         day_energy:32123,
         total_energy:349390,
-        time:'2014/01/15-2017/03/12'
+        time:'2014/01/15-2017/03/12',
+        point:15
       },
       {
         module_id:2,
@@ -29,7 +30,8 @@ class DetailList extends React.Component {
         power:2323,
         day_energy:32123,
         total_energy:349390,
-        time:'2010/01/15-2017/03/12'
+        time:'2010/01/15-2017/03/12',
+        point:35
       },
       {
         module_id:3,
@@ -38,7 +40,28 @@ class DetailList extends React.Component {
         power:2323,
         day_energy:32123,
         total_energy:349390,
-        time:'2016/01/15-2017/03/12'
+        time:'2016/01/15-2017/03/12',
+        point:55
+      },
+      {
+        module_id:3,
+        module_name:'模块4',
+        url:'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1510122196173&di=3489e30f21a2613f49bd8d169468144a&imgtype=0&src=http%3A%2F%2Fpic31.photophoto.cn%2F20140603%2F0038038330870090_b.jpg',
+        power:2323,
+        day_energy:32123,
+        total_energy:349390,
+        time:'2016/01/15-2017/03/12',
+        point:75
+      },
+      {
+        module_id:3,
+        module_name:'模块5',
+        url:'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1510122196173&di=3489e30f21a2613f49bd8d169468144a&imgtype=0&src=http%3A%2F%2Fpic31.photophoto.cn%2F20140603%2F0038038330870090_b.jpg',
+        power:2323,
+        day_energy:32123,
+        total_energy:349390,
+        time:'2016/01/15-2017/03/12',
+        point:95
       }
     ]
     return (

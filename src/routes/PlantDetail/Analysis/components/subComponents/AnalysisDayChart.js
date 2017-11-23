@@ -39,13 +39,13 @@ class AnalysisDayChart extends Component {
       },
       grid: {
         left: '12%',
-        right: '3%',
+        right: '12%',
         bottom: '15%',
-        top: '12%'
+        top: '18%'
       },
       xAxis: [{
         type: 'category',
-        boundaryGap: false,
+        name: '时间',
         axisLine: {
           lineStyle: {
             color: '#57617B'
@@ -55,6 +55,7 @@ class AnalysisDayChart extends Component {
       }],
       yAxis: [{
         type: 'value',
+        name: '功率(W)',
         axisTick: {
           show: false
         },
@@ -76,13 +77,13 @@ class AnalysisDayChart extends Component {
         }
       }],
       series: this.props.options
-    };
+    }
     // 绘制图表
     myChart.setOption(analysisDayOption)
   }
   render () {
     return (
-      <div id='analysis_day_chart' style={{ width: '98%', height: 200 }} />
+      <div id='analysis_day_chart' style={{ width: '98%', height: 260 }} />
     )
   }
 }

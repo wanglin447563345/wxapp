@@ -10,6 +10,60 @@ import './Index.scss'
 
 const alert = Modal.alert
 
+// 信号强度组件
+const Signal = (props) => {
+  let ranks = Number.parseInt((props.point))
+  if (ranks <= 0) {
+    return <div className='signal'>
+      <span />
+      <span />
+      <span />
+      <span />
+      <span />
+    </div>
+  } else if (ranks <= 20) {
+    return <div className='signal'>
+      <span style={{ backgroundColor:'#F1522C' }} />
+      <span />
+      <span />
+      <span />
+      <span />
+    </div>
+  } else if (ranks <= 40) {
+    return <div className='signal'>
+      <span style={{ backgroundColor:'#F1522C' }} />
+      <span style={{ backgroundColor:'#F1522C' }} />
+      <span />
+      <span />
+      <span />
+    </div>
+  } else if (ranks <= 60) {
+    return <div className='signal'>
+      <span style={{ backgroundColor:'#FEC93E' }} />
+      <span style={{ backgroundColor:'#FEC93E' }} />
+      <span style={{ backgroundColor:'#FEC93E' }} />
+      <span />
+      <span />
+    </div>
+  } else if (ranks <= 80) {
+    return <div className='signal'>
+      <span style={{ backgroundColor:'#4DD7A5' }} />
+      <span style={{ backgroundColor:'#4DD7A5' }} />
+      <span style={{ backgroundColor:'#4DD7A5' }} />
+      <span style={{ backgroundColor:'#4DD7A5' }} />
+      <span />
+    </div>
+  } else {
+    return <div className='signal'>
+      <span style={{ backgroundColor:'#4DD7A5' }} />
+      <span style={{ backgroundColor:'#4DD7A5' }} />
+      <span style={{ backgroundColor:'#4DD7A5' }} />
+      <span style={{ backgroundColor:'#4DD7A5' }} />
+      <span style={{ backgroundColor:'#4DD7A5' }} />
+    </div>
+  }
+}
+
 class DetailListItem extends React.Component {
   render () {
     const { ModuleListData } = this.props
@@ -39,6 +93,7 @@ class DetailListItem extends React.Component {
                   <p>
                     <span>{item.module_name}</span>
                   </p>
+                  <Signal point={item.point} />
                 </div>
                 <div className='list_item_bottom'>
                   <div className='img'>
@@ -77,7 +132,9 @@ class DetailListItem extends React.Component {
     Toast.success('删除成功')
   }
 }
-
+Signal.propTypes = {
+  point: PropTypes.number.isRequired
+}
 DetailListItem.propTypes = {
   ModuleListData: PropTypes.array.isRequired
 }
