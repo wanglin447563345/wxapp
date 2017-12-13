@@ -1,3 +1,3 @@
-react搭建的一个电站监控webapp
+react搭建的一个用于微信公众号电站监控webapp
 涉及技术：
-react全家桶、antd-mobile、echatrs、flex布局以及百度地图
+react全家桶、antd-mobile、echatrs、微信扫一扫和定位接口调用、flex布局以及百度地图
