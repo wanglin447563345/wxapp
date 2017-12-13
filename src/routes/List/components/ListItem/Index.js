@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { browserHistory } from 'react-router'
-import { Modal, Toast, SwipeAction, List } from 'antd-mobile'
+import { Modal, Toast, SwipeAction, ActivityIndicator, List } from 'antd-mobile'
 import POWERSTATION from './imgs/power2_station.png'
 import DELETE from './imgs/delete.png'
 import POWER2 from './imgs/power2.png'
@@ -17,7 +17,7 @@ class ListItem extends React.Component {
   render () {
     const { listData } = this.props
     return (
-      <List className='list_items'>
+      listData ? <List className='list_items'>
         {listData.map((item, key) => {
           return (
             <SwipeAction
@@ -30,7 +30,7 @@ class ListItem extends React.Component {
                     { text: '取消', onPress: () => console.log('cancel') },
                     {
                       text: '确定',
-                      onPress: () => this.deletePlant(item.plant_id)
+                      onPress: () => this.props.deletePlant({ plant_id: item.plant_id })
                     }
                   ]),
                   style: { backgroundColor: '#f04134', color: 'white', width: '100px', fontSize: '20px' }
@@ -48,12 +48,12 @@ class ListItem extends React.Component {
                 </div>
                 <div className='list_item_bottom'>
                   <div className='img'>
-                    <img src={item.url} alt='' />
+                    <img src={`/assets/attachment${item.url}`} alt='' />
                   </div>
                   <div>
                     <p>
                       <img src={POWER2} alt='' />
-                      <span>当前功率(kW)</span>
+                      <span>当前功率(W)</span>
                       <span className='power'>{item.power}</span>
                     </p>
                     <p>
@@ -82,12 +82,8 @@ class ListItem extends React.Component {
             </SwipeAction>
           )
         })}
-      </List>
+      </List> : <ActivityIndicator animating />
     )
-  }
-  // 删除电站
-  deletePlant = () => {
-    Toast.success('删除成功')
   }
   // 跳转电站详情
   skipPlantBasic = (id) => {
@@ -96,7 +92,7 @@ class ListItem extends React.Component {
 }
 
 ListItem.propTypes = {
-  listData: PropTypes.array.isRequired
+
 }
 
 export default ListItem

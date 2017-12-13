@@ -1,8 +1,11 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { browserHistory } from 'react-router'
-import { Button, List, InputItem, WhiteSpace } from 'antd-mobile'
+import { Button, List, InputItem, WhiteSpace, Toast } from 'antd-mobile'
 import { createForm } from 'rc-form'
+import md5 from 'md5'
+import Services from '../../../services/Service'
+import Util from '../../../util/Util'
 
 import ACCOUNT_NOR from './imgs/account_nor.png'
 import ACCOUNT_SEL from './imgs/account_sel.png'
@@ -14,7 +17,7 @@ import PASSWORD_OFF from './imgs/password_off.png'
 
 import './Index.scss'
 
-class LoginFrom extends Component {
+class LoginForm extends Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -32,11 +35,11 @@ class LoginFrom extends Component {
           <img src={BG_PIC} alt='' />
         </div>
         <div className='login_bottom'>
-          <List >
+          <List>
             <WhiteSpace />
             <WhiteSpace />
             <InputItem
-              {...getFieldProps('username', {
+              {...getFieldProps('userName', {
                 initialValue: '',
                 rules: [
                   {
@@ -46,7 +49,6 @@ class LoginFrom extends Component {
               })}
               onFocus={() => this.nameFocus(true)}
               onBlur={() => this.nameFocus(false)}
-              type=''
               placeholder='请输入手机或邮箱'
               autoFocus
             >
@@ -74,7 +76,7 @@ class LoginFrom extends Component {
             <WhiteSpace />
             <WhiteSpace />
             <WhiteSpace />
-            <Button type='primary' onClick={this.login}>绑定</Button>
+            <Button type='primary' onClick={this.bindingLogin}>绑定</Button>
           </List>
         </div>
       </div>
@@ -101,14 +103,47 @@ class LoginFrom extends Component {
   }
 
   // 绑定登录
-  login= () => {
-    browserHistory.push('/')
+  bindingLogin= () => {
+    const openId = this.props.location.query.openid
+    const formObj = this.props.form.getFieldsValue()
+    const userName = formObj.userName
+    const password = formObj.password
+    if (userName && password) {
+      const formData = {
+        openid: openId,
+        user_name: Util.replaceBlank(userName),
+        password: md5(password)
+      }
+      Services.bindingLogin(formData).then(data => {
+        if (data) {
+          if (data.errno === 0) {
+            const userInfo = {
+              token:data.data.token,
+              userId: data.data.user_id
+            }
+            Util.setCookie('user_info', JSON.stringify(userInfo))
+            if (data.data.plant_num) {
+              browserHistory.push('/wx/')
+            } else {
+              browserHistory.push('/wx/create')
+            }
+          } else {
+            Toast.info(data.errmsg)
+          }
+        } else {
+          Toast.info('服务器异常，请稍后再试！')
+        }
+      })
+    } else {
+      Toast.info('用户名和密码不能为空')
+    }
   }
 }
 
-LoginFrom.propTypes = {
-  form: PropTypes.object.isRequired
+LoginForm.propTypes = {
+  form: PropTypes.object.isRequired,
+  location: PropTypes.object.isRequired
 }
-const Login = createForm()(LoginFrom)
+const Login = createForm()(LoginForm)
 
 export default Login

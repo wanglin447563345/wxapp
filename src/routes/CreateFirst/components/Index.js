@@ -1,17 +1,50 @@
 import React, { Component } from 'react'
 import { browserHistory } from 'react-router'
 import PropTypes from 'prop-types'
-import { Carousel } from 'antd-mobile'
+import { Carousel, Toast } from 'antd-mobile'
+import WX from 'weixin-js-sdk'
+import Service from '../../../services/Service'
+
 import PLANT from './imgs/plant.png'
 import ADD from './imgs/add.png'
 
 import './Index.scss'
+
 class Create extends Component {
+  state = {
+    wxConfig: ''
+  }
+  componentDidMount () {
+  }
   render () {
+    const createPlant = () => {
+      WX.scanQRCode({
+        needResult: 1, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+        scanType: ['qrCode', 'barCode'], // 可以指定扫二维码还是一维码，默认二者都有
+        success: function (res) {
+          const moduleSn = res.resultStr // 当needResult 为 1 时，扫码返回的结果
+          Service.checkModuleSn({ module_sn: moduleSn }).then(data => {
+            if (data.errno === 0) {
+              if (data.data.user_id !== 0) {
+                Toast.info('序列号已被占用')
+              } else {
+                browserHistory.push(`/wx/email?module_sn=${moduleSn}`)
+              }
+            } else {
+              browserHistory.push(`/wx/create`)
+              Toast.info(data.errmsg)
+            }
+          })
+        }
+      })
+      WX.error(function (res) {
+        Toast.info('失败')
+      })
+    }
     return (
       <div className='create'>
         <Carousel
-          className="my-carousel"
+          className='my-carousel'
           autoplay
           infinite
           speed={200}
@@ -29,8 +62,8 @@ class Create extends Component {
         <div className='create_item'>
           <img src={PLANT} alt='' /><span>示例电站</span>
         </div>
-        <div className='create_item'>
-          <img src={ADD} alt='' /><span>一键添加</span>
+        <div className='create_item' onClick={createPlant}>
+          <img src={ADD} alt='' /><span>扫码添加</span>
         </div>
       </div>
     )

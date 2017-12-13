@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { browserHistory } from 'react-router'
+import Header from '../../../../components/Header'
 import { createForm } from 'rc-form'
 import { district, provinceLite as province } from 'antd-mobile-demo-data'
 import { List, InputItem, Picker, Modal, Toast } from 'antd-mobile'
@@ -10,6 +10,7 @@ const alert = Modal.alert
 
 class EditForm extends React.Component {
   state = {
+    Editing:false,
     data: [],
     cols: 1,
     pickerValue: [],
@@ -34,76 +35,88 @@ class EditForm extends React.Component {
   }
   render () {
     const { query } = this.props.location
+    const plant_name='电站1'
     const { getFieldProps } = this.props.form;
     return (
       <div className='edit'>
-        <div className='edit_avatar'>
-          <div onClick={() => alert('Delete', '确定保存修改内容吗？', [
-            { text: '取消', onPress: () => console.log('cancel') },
-            { text: '确定', onPress: () => this.EditSubmit() }
-          ])}>编辑完成</div>
-          <p>
-            <img src='http://imgsrc.baidu.com/imgad/pic/item/500fd9f9d72a6059dc3098232334349b033bbae3.jpg' alt='' />
-          </p>
-          <span>上传/修改</span>
-        </div>
-        <div className='edit_info'>
-          <List>
-            <p>电站信息</p>
-            <InputItem
-              {...getFieldProps('plant_name')}
-              clear
-              placeholder='输入电站名称'
-              ref={el => this.autoFocusInst = el}
-            >电站名称</InputItem>
-            <InputItem
-              {...getFieldProps('system_size')}
-              placeholder='装机容量'
-              type='number'
-              clear
-              moneyKeyboardAlign='left'
-            >装机容量</InputItem>
-            <InputItem
-              {...getFieldProps('price')}
-              placeholder='单位电价'
-              type='number'
-              clear
-              moneyKeyboardAlign='left'
-            >单位电价</InputItem>
-            <InputItem
-              {...getFieldProps('money3')}
-              placeholder='初始容量'
-              type='number'
-              clear
-              moneyKeyboardAlign='left'
-            >初始电量</InputItem>
-            <p>地理位置</p>
-            <Picker data={district} cols={1} {...getFieldProps('district1')} className="forss">
-              <List.Item arrow="horizontal">时区</List.Item>
-            </Picker>
-            <Picker data={district} cols={1} {...getFieldProps('district2')} className="forss">
-              <List.Item arrow="horizontal">国家</List.Item>
-            </Picker>
-            <Picker
-              visible={this.state.visible}
-              data={district}
-              value={this.state.pickerValue}
-              onChange={v => this.setState({ pickerValue: v })}
-              onOk={() => this.setState({ visible: false })}
-              onDismiss={() => this.setState({ visible: false })}
-            >
-              <List.Item extra={this.getSel()} onClick={() => this.setState({ visible: true })} arrow='horizontal'>
-                地区
-              </List.Item>
-            </Picker>
-          </List>
+        <div style={{ height: '100%', overflow: 'auto' }}>
+          <div className='detail_header'>
+            <Header title={`${plant_name}详情`} />
+          </div>
+          <div className='edit_avatar'>
+            {this.state.Editing ? <div onClick={() => alert('修改', '确定保存修改内容吗？', [
+              { text: '取消', onPress: () => console.log('cancel') },
+              { text: '确定', onPress: () => this.EditSubmit() }
+            ])}>完成</div> : <div onClick={() => this.setState({ Editing:true })}>编辑</div>}
+            <p>
+              <img src='http://imgsrc.baidu.com/imgad/pic/item/500fd9f9d72a6059dc3098232334349b033bbae3.jpg' alt='' />
+            </p>
+            <span>上传/修改</span>
+          </div>
+          <div className='edit_info'>
+            <List>
+              <p>电站信息</p>
+              <InputItem
+                {...getFieldProps('plant_name')}
+                clear
+                placeholder='输入电站名称'
+                editable={this.state.Editing}
+              >电站名称</InputItem>
+              <InputItem
+                {...getFieldProps('system_size')}
+                placeholder='装机容量'
+                type='number'
+                clear
+                editable={this.state.Editing}
+                moneyKeyboardAlign='left'
+              >装机容量</InputItem>
+              <InputItem
+                {...getFieldProps('price')}
+                placeholder='单位电价'
+                type='number'
+                clear
+                editable={this.state.Editing}
+                moneyKeyboardAlign='left'
+              >单位电价</InputItem>
+              <p>地理位置</p>
+              <Picker
+                data={district}
+                cols={1}
+                disabled={!this.state.Editing}
+                {...getFieldProps('district1')}
+                className="forss">
+                <List.Item arrow="horizontal">时区</List.Item>
+              </Picker>
+              <Picker
+                data={district}
+                cols={1}
+                disabled={!this.state.Editing}
+                {...getFieldProps('district2')}
+                className="forss">
+                <List.Item arrow="horizontal">国家</List.Item>
+              </Picker>
+              <Picker
+                visible={this.state.visible}
+                data={district}
+                value={this.state.pickerValue}
+                disabled={!this.state.Editing}
+                onChange={v => this.setState({ pickerValue: v })}
+                onOk={() => this.setState({ visible: false })}
+                onDismiss={() => this.setState({ visible: false })}
+              >
+                <List.Item extra={this.getSel()} onClick={() => this.setState({ visible: true })} arrow='horizontal'>
+                  地区
+                </List.Item>
+              </Picker>
+            </List>
+          </div>
         </div>
       </div>
     )
   }
   EditSubmit = () => {
     Toast.success('修改保存成功')
-    browserHistory.push('/wx/detail/basic')
+    this.setState({ Editing:false })
   }
 }
 EditForm.propTypes = {

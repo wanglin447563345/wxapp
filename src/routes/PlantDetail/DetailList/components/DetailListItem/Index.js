@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Modal, Toast, SwipeAction, List } from 'antd-mobile'
+import { Modal, Toast, SwipeAction,ActivityIndicator, List } from 'antd-mobile'
 
 import POWER2 from '../../../../List/components/ListItem/imgs/power2.png'
 import GENERTING_CAPACITY from '../../../../List/components/ListItem/imgs/total_generating_capacity.png'
@@ -66,10 +66,10 @@ const Signal = (props) => {
 
 class DetailListItem extends React.Component {
   render () {
-    const { ModuleListData } = this.props
+    const { detailListData } = this.props
     return (
-      <List className='list_items'>
-        {ModuleListData.map((item, key) => {
+      detailListData ? <List className='list_items'>
+        {detailListData.map((item, key) => {
           return (
             <SwipeAction
               key={key}
@@ -77,11 +77,11 @@ class DetailListItem extends React.Component {
               right={[
                 {
                   text: '删除',
-                  onPress: () => alert('删除', `确定删除逆变器:${item.module_name}`, [
+                  onPress: () => alert('删除', `确定删除逆变器:${item.device_name}`, [
                     { text: '取消', onPress: () => console.log('cancel') },
                     {
                       text: '确定',
-                      onPress: () => this.deleteModule(item.module_id)
+                      onPress: () => this.props.deleteModule({ module_id: item.module_id })
                     }
                   ]),
                   style: { backgroundColor: '#f04134', color: 'white', width: '100px', fontSize: '20px' }
@@ -91,7 +91,7 @@ class DetailListItem extends React.Component {
               <List.Item key={item.module_id}>
                 <div className='list_item_header'>
                   <p>
-                    <span>{item.module_name}</span>
+                    <span>{item.device_name}</span>
                   </p>
                   <Signal point={item.point} />
                 </div>
@@ -108,7 +108,7 @@ class DetailListItem extends React.Component {
                     <p>
                       <img src={GENERTING2_CAPACITY} alt='' />
                       <span>当日电量(kWh)</span>
-                      <span className='system_size'>{item.day_energy}</span>
+                      <span className='system_size'>{item.todays_energy}</span>
                     </p>
                     <p>
                       <img src={GENERTING_CAPACITY} alt='' />
@@ -124,19 +124,14 @@ class DetailListItem extends React.Component {
             </SwipeAction>
           )
         })}
-      </List>
+      </List> : <ActivityIndicator animating />
     )
-  }
-  // 删除电站
-  deleteModule = () => {
-    Toast.success('删除成功')
   }
 }
 Signal.propTypes = {
   point: PropTypes.number.isRequired
 }
 DetailListItem.propTypes = {
-  ModuleListData: PropTypes.array.isRequired
 }
 
 export default DetailListItem

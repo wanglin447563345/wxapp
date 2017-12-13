@@ -7,6 +7,8 @@ import EMAIL_NOR from './imgs/email_nor.png'
 import EMAIL_SEL from './imgs/email_sel.png'
 import PHONE_NOR from './imgs/phone_nor.png'
 import PHONE_SEL from './imgs/phone_sel.png'
+import Service from '../../../services/Service'
+import Util from '../../../util/Util'
 import './Index.scss'
 const alert = Modal.alert
 
@@ -17,8 +19,12 @@ class EditFrom extends Component {
       isEdit:false
     }
   }
+  componentDidMount () {
+    this.props.get_user_info()
+  }
   render () {
     const { getFieldProps } = this.props.form
+    const { userInfo } = this.props.user
     return (
       <div className='user'>
         <div className='user_header'>
@@ -29,7 +35,7 @@ class EditFrom extends Component {
             <p className='avatar'>
               <img src='http://img5.imgtn.bdimg.com/it/u=3551563550,2594280103&fm=27&gp=0.jpg' alt='' />
             </p>
-            <div><span>用户名</span><p>王林</p></div>
+            <div><span>用户名</span><p>{userInfo ? userInfo.user_name : null}</p></div>
           </div>
         </div>
         <div className='user_info'>
@@ -37,8 +43,8 @@ class EditFrom extends Component {
             <WhiteSpace />
             <WhiteSpace />
             <InputItem
-              {...getFieldProps('useremail', {
-                initialValue: '',
+              {...getFieldProps('user_email', {
+                initialValue: userInfo ? userInfo.email : null,
                 rules: [
                   {
                     required: true
@@ -55,7 +61,7 @@ class EditFrom extends Component {
             <WhiteSpace />
             <InputItem
               {...getFieldProps('user_phone', {
-                initialValue: '',
+                initialValue: userInfo ? userInfo.mobile : null,
                 rules: [
                   {
                     required: true
@@ -92,15 +98,40 @@ class EditFrom extends Component {
     })
   }
   editComplete= () => {
-    Toast.success('修改保存成功')
-    this.setState({
-      isEdit:false
-    })
+    const formObj = this.props.form.getFieldsValue()
+    const formData = {
+      user_id: 519029,
+      email: formObj.user_email,
+      mobile:formObj.user_phone
+    }
+    let checkResult
+    if (formObj.user_phone) {
+      checkResult = (Util.checkEmail(formObj.user_email) && Util.checkPhone(Util.replaceBlank(formObj.user_phone)))
+    } else {
+      checkResult = Util.checkEmail(formObj.user_email)
+    }
+    if (checkResult) {
+      Service.updateUserInfo(formData).then(data => {
+        if (data.errno === 0) {
+          this.props.get_user_info()
+          Toast.success('修改成功')
+          this.setState({
+            isEdit:false
+          })
+        } else {
+          Toast.fail(data.errmsg)
+        }
+      })
+    } else {
+      Toast.info('邮箱或手机号不合法')
+    }
   }
 }
 
 EditFrom.propTypes = {
-  form: PropTypes.object.isRequired
+  form: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired,
+  get_user_info: PropTypes.func.isRequired
 }
 const User = createForm()(EditFrom)
 export default User

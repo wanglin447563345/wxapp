@@ -10,63 +10,67 @@ import 'echarts/lib/component/tooltip'
 import 'echarts/lib/component/title'
 
 class AreaChart extends Component {
-  componentDidMount () {
+  componentWillReceiveProps (nextProps) {
     // 基于准备好的dom，初始化echarts实例
     const chartId = document.getElementById('area')
     let myChart = echarts.init(chartId)
-    const AreaOption = {
-      title : {},
-      tooltip : {
-        trigger: 'axis'
-      },
-      toolbox: {
-        show : true,
-        feature : {
-          mark : { show: true },
-          dataView : { show: true, readOnly: false },
-          magicType : { show: true, type: ['line', 'bar', 'stack', 'tiled'] },
-          restore : { show: true },
-          saveAsImage : { show: true }
-        }
-      },
-      calculable : true,
-      xAxis : [
-        {
-          type : 'time',
-          boundaryGap : false
-        }
-      ],
-      grid: {
-        left: '3%',
-        right: '4%',
-        top: '4%',
-        bottom: '1%',
-        containLabel: true
-      },
-      yAxis : [
-        {
-          type : 'value'
-        }
-      ],
-      series : [
-        {
-          name:'发电量',
-          type:'line',
-          smooth:true,
-          itemStyle: {
-            normal: {
-              areaStyle: {
-                type: 'default',
-                color: '#AA4CBA'
+    if (this.props.options.powerData !== nextProps.options.powerData) {
+      const AreaOption = {
+        title : {},
+        tooltip: {
+          trigger: 'axis',
+          position: function (pt) {
+            return [pt[0], '10%']
+          }
+        },
+        toolbox: {
+          feature: {
+            dataZoom: {
+              yAxisIndex: 'none'
+            },
+            restore: {},
+            saveAsImage: {}
+          }
+        },
+        xAxis : [
+          {
+            type : 'time',
+            boundaryGap : false
+          }
+        ],
+        grid: {
+          left: '3%',
+          right: '5%',
+          top: '5%',
+          bottom: '1%',
+          containLabel: true
+        },
+        yAxis : [
+          {
+            type : 'value'
+          }
+        ],
+        series : [
+          {
+            name:'功率',
+            type:'line',
+            smooth:true,
+            itemStyle: {
+              normal: {
+                color: 'rgb(255, 70, 131)',
+                areaStyle: {
+                  type: 'default',
+                  color: '#AA4CBA'
+                }
               }
-            }
-          },
-          data: this.props.options.data
-        }
-      ]
+            },
+            data: nextProps.options.powerData
+          }
+        ]
+      }
+      // 绘制图表
+      myChart.setOption(AreaOption)
     }
-    // 绘制图表
-    myChart.setOption(AreaOption)
   }
   render () {
     return (

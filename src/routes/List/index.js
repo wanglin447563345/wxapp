@@ -6,7 +6,7 @@ export default (store) => ({
     require.ensure([], (require) => {
       const Index = require('./containers/Index').default
       const reducer = require('./redux/reducer').default
-      injectReducer(store, { key: 'list', reducer })
+      injectReducer(store, { key: 'plantList', reducer })
       cb(null, Index)
     })
   }

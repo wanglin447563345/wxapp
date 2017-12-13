@@ -10,45 +10,52 @@ import 'echarts/lib/component/tooltip'
 import 'echarts/lib/component/title'
 
 class SumChart extends Component {
-  componentDidMount () {
+  componentWillReceiveProps (nextProps) {
     // 基于准备好的dom，初始化echarts实例
     const chartId = document.getElementById('SumChart')
     let myChart = echarts.init(chartId)
-    // 绘制图表
-    myChart.setOption({
-      title: {},
-      tooltip: {},
-      xAxis: {
-        data: this.props.options.time
-      },
-      grid: {
-        left: '3%',
-        right: '4%',
-        top: '3%',
-        bottom: '1%',
-        containLabel: true
-      },
-      yAxis: {},
-      series: [{
-        name: '发电量',
-        type: 'bar',
-        itemStyle: {
-          normal: {
-            type: 'default',
-            color: '#F1522C',
-            label : {
-              show : true,
-              textStyle : {
-                fontSize : '12',
-                fontFamily : '微软雅黑',
-                fontWeight : 'bold'
-              }
-            }
+    if (this.props.options !== nextProps.options) {
+      // 绘制图表
+      myChart.setOption({
+        title: {},
+        tooltip : {
+          trigger: 'axis',
+          axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
           }
         },
-        data: this.props.options.data
-      }]
-    })
+        xAxis: {
+          data: nextProps.options.time
+        },
+        grid: {
+          left: '3%',
+          right: '5%',
+          top: '5%',
+          bottom: '1%',
+          containLabel: true
+        },
+        yAxis: {},
+        series: [{
+          name: '发电量',
+          type: 'bar',
+          itemStyle: {
+            normal: {
+              type: 'default',
+              color: '#F1522C',
+              label : {
+                show : true,
+                textStyle : {
+                  fontSize : '12',
+                  fontFamily : '微软雅黑',
+                  fontWeight : 'bold'
+                }
+              }
+            }
+          },
+          data: nextProps.options.data
+        }]
+      })
+    }
   }
   render () {
     return (

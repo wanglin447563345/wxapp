@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Tabs } from 'antd-mobile'
+import { Tabs, ActivityIndicator } from 'antd-mobile'
 import { browserHistory } from 'react-router'
 import Header from '../../../../components/Header'
 import DashChart from '../../../../components/DashboardChart'
@@ -12,40 +12,20 @@ import SumChart from '../../../../components/SumChart'
 import DETAIL_EDIT from './imgs/detail_edit.png'
 import './Index.scss'
 
-
 class DetailBasic extends React.Component {
-  render () {
+  componentDidMount () {
     const { query } = this.props.location
-    const DashOptions = {
-      data:[{ value: 50, name: '使用率' }]
+    this.props.get_plant_info({ plant_id: query.plant_id })
+    // 获取实时功率数据
+    const d = new Date()
+    const date = `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`
+    const formData = {
+      date: date,
+      plant_id: this.props.location.query.plant_id
     }
-    const plant_name='电站1'
-
-    const ItemData = {
-      generating_capacity:83.0,
-      cumulative_capacity:220.0,
-      cumulative_profit:243.0,
-      profit:3232.0
-    }
-    const AreaOption = {
-      data: [
-        { value:['2016/12/18 6:38:08', 80] },
-        { value:['2016/12/18 16:18:18', 60] },
-        { value:['2016/12/18 19:18:18', 90] }
-      ]
-    }
-    const monthOptions = {
-      time:['1号', '2号', '3号', '4号', '5号', '6号'],
-      data:[51, 230, 32, 430, 343, 100]
-    }
-    const yearOptions = {
-      time:['一月', '二月', '三月', '四月', '五月', '六月'],
-      data:[532, 240, 346, 103, 130, 300]
-    }
-    const sumOptions = {
-      time:['2017', '2018', '2019', '2020', '2021', '2025'],
-      data:[542, 220, 336, 140, 102, 500]
-    }
+    this.props.get_plant_power_data(formData)
+  }
+  render () {
     // Tab
     const tabs = [
       { title: '日', sub: '1' },
@@ -53,13 +33,25 @@ class DetailBasic extends React.Component {
       { title: '年', sub: '3' },
       { title: '累计', sub: '4' }
     ]
+    const { plantInfo, powerData, dayEnergy, monthEnergy, yearEnergy } = this.props.detailBasic
+    let DashOptions
+    let ItemData
+    if (plantInfo) {
+      DashOptions = {
+        power: plantInfo.power,
+        system_size: plantInfo.system_size
+      }
+      ItemData = {
+        generating_capacity:plantInfo.todays_energy,
+        cumulative_capacity:plantInfo.total_energy,
+        cumulative_profit:plantInfo.todays_income,
+        profit:plantInfo.total_income
+      }
+    }
     return (
       <div className='basic detail_basic'>
         <div className='detail_header'>
-          <Header title={`${plant_name}概况`} />
-          <p className='basic_edit' onClick={() => { browserHistory.push('/wx/detail/edit') }}>
-            <img src={DETAIL_EDIT} alt='' />编辑
-          </p>
+          <Header title={`${plantInfo.plant_name}概况`} />
         </div>
         <div className='dashChart detail_dash_chart'>
           <DashChart options={DashOptions} />
@@ -71,29 +63,104 @@ class DetailBasic extends React.Component {
           <Tabs
             tabs={tabs}
             initialPage={0}
-            onChange={(tab, index) => { console.log('onChange', index, tab) }}
+            onChange={(tab, index) => this.tabChange(tab, index)}
             onTabClick={(tab, index) => { console.log('onTabClick', index, tab) }}
           >
             <div className='tab_content'>
-              <DayChart options={AreaOption} />
+              { powerData ? <DayChart options={{ powerData }} /> : <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  margin:'0 auto'
+                }}>
+                <ActivityIndicator text='加载中...' />
+              </div>
+              }
             </div>
             <div className='tab_content'>
-              <MonthChart options={monthOptions} />
+              { dayEnergy ? <MonthChart options={dayEnergy} /> : <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  margin:'0 auto'
+                }}>
+                <ActivityIndicator text='加载中...' />
+              </div>
+              }
             </div>
             <div className='tab_content'>
-              <YearChart options={yearOptions} />
+              { monthEnergy ? <YearChart options={monthEnergy} /> : <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  margin:'0 auto'
+                }}>
+                <ActivityIndicator text='加载中...' />
+              </div>
+              }
             </div>
             <div className='tab_content'>
-              <SumChart options={sumOptions} />
+              { yearEnergy ? <SumChart options={yearEnergy} /> : <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  margin:'0 auto'
+                }}>
+                <ActivityIndicator text='加载中...' />
+              </div>
+              }
             </div>
           </Tabs>
         </div>
       </div>
     )
   }
+  tabChange=(a, b) => {
+    const { plant_id } = this.props.location.query
+    const d = new Date()
+    switch (b) {
+      case 0: {
+        const formData = {
+          date: `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`,
+          plant_id: plant_id
+        }
+        this.props.get_plant_power_data(formData)
+      }
+        break
+      case 1: {
+        const formData = {
+          month: `${d.getFullYear()}-${d.getMonth() + 1}`,
+          plant_id: plant_id
+        }
+        this.props.get_plant_day_energy(formData)
+      }
+        break
+      case 2: {
+        const formData = {
+          year: `${d.getFullYear()}`,
+          plant_id: plant_id
+        }
+        this.props.get_plant_month_energy(formData)
+      }
+        break
+      case 3: {
+        const formData = {
+          plant_id: plant_id
+        }
+        this.props.get_plant_year_energy(formData)
+      }
+        break
+    }
+  }
 }
 DetailBasic.propTypes = {
-  location: PropTypes.object.isRequired
+  location: PropTypes.object.isRequired,
+  detailBasic: PropTypes.object.isRequired,
+  get_plant_info: PropTypes.func.isRequired,
+  get_plant_power_data: PropTypes.func.isRequired,
+  get_plant_day_energy: PropTypes.func.isRequired,
+  get_plant_month_energy: PropTypes.func.isRequired,
+  get_plant_year_energy: PropTypes.func.isRequired
 }
 
 export default DetailBasic
