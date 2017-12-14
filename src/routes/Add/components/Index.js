@@ -24,7 +24,14 @@ class AddForm extends Component {
       }
     ],
     lat:'',
-    lng:''
+    lng:'',
+    country:'中国',
+    country_id:'48',
+    province:'',
+    province_id:'',
+    city:'',
+    city_id:'',
+    address:''
   }
   componentDidMount () {
     WX.getLocation({
@@ -34,6 +41,8 @@ class AddForm extends Component {
           lat:res.latitude,
           lng:res.longitude
         })
+        // 获取省市区地址
+        this.getAddress(res.longitude, res.latitude)
       },
       cancel: (res) => {
         alert('用户拒绝授权获取地理位置')
@@ -43,6 +52,66 @@ class AddForm extends Component {
       }
     })
   }
+  componentWillUpdate (nextProps, nextState) {
+    if (this.state.province !== nextState.province) { // 确保定位获取到省份
+      this.getProvinceId({ parent_id: this.state.country_id })
+    }
+  }
+  // 获取省市区地址
+  getAddress = (lng, lat) => {
+    let BMap = window.BMap
+    let geoc = new BMap.Geocoder()
+    let point = new BMap.Point(lng, lat)
+    geoc.getLocation(point, (rs) => {
+      let addComp = rs.addressComponents
+      if (addComp.province === '上海市' ||
+        addComp.province === '北京市' ||
+        addComp.province === '天津市' ||
+        addComp.province === '重庆市') {
+        this.setState({
+          province:addComp.city.replace('市', ''),
+          city:addComp.district,
+          address:addComp.street + addComp.streetNumber
+        })
+      } else {
+        this.setState({
+          province:addComp.province.replace('省', ''),
+          city:addComp.city,
+          address:addComp.district + addComp.street + addComp.streetNumber
+        })
+      }
+    })
+  }
+  // 获取省id
+  getProvinceId = (params) => {
+    Service.getLocationList(params).then(data => {
+      if (data.errno === 0) {
+        for (let i = 0; i < data.data.length; i++) {
+          if (this.state.province) {
+            if (this.state.province === data.data[i].location_name) {
+              this.setState({ province_id:data.data[i].location_id })
+              this.getCityId({ parent_id: this.state.province_id })
+            }
+          }
+        }
+      } else {
+        Toast.fail(data.errmsg)
+      }
+    })
+  }
+  // 获取市id
+  getCityId = (params) => {
+    Service.getLocationList(params).then(data => {
+      for (let i = 0; i < data.data.length; i++) {
+        if (this.state.city) {
+          if (this.state.city === data.data[i].location_name) {
+            this.setState({ city_id:data.data[i].location_id })
+          }
+        }
+      }
+    })
+  }
+
   render () {
     const { getFieldProps } = this.props.form
     return (
@@ -53,8 +122,9 @@ class AddForm extends Component {
             position:'absolute',
             left:0,
             display:'inline-block',
-            padding:'8px 16px 16px 4px',
-            color: '#fff'
+            padding:'16px 16px 16px 4px',
+            color: '#fff',
+            fontSize:18
           }}> 《 返回列表</span>
         <WhiteSpace />
         <WhiteSpace />
@@ -138,12 +208,17 @@ class AddForm extends Component {
       </div>
     )
   }
+
   createPlant = () => {
     const { getFieldsValue } = this.props.form
     const formObj = getFieldsValue()
     formObj['module_sn'] = this.props.location.query.module_sn
     formObj['plant_latitude'] = this.state.lat
     formObj['plant_longitude'] = this.state.lng
+    formObj['country_id'] = this.state.country_id
+    formObj['province_id'] = this.state.province_id
+    formObj['city_id'] = this.state.city_id
+    formObj['address'] = this.state.address
     this.props.create_plant(formObj)
   }
 }

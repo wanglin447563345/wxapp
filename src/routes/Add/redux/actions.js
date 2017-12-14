@@ -28,11 +28,11 @@ export const create_plant = (params) => {
       module_sn: params.module_sn,
       plant_latitude: params.plant_latitude,
       plant_longitude: params.plant_longitude,
+      country_id: params.country_id,
+      province_id: params.province_id,
+      city_id: params.city_id,
+      address: params.address,
       time_zone: 8,
-      country_id: 0,
-      province_id: 0,
-      city_id: 0,
-      address: '',
       is_public: 1
     }
     Service.createPlant(formData).then(data => {

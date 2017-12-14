@@ -139,4 +139,10 @@ Service.addModule = (params) => {
   return Http.post(url, params, null)
 }
 
+// 获取省市列表
+Service.getLocationList = (params) => {
+  const url = `${window.dataUrl}/base/location/list`
+  return Http.post(url, params, null)
+}
+
 export default Service
