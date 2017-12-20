@@ -39,7 +39,7 @@ class CoreLayout extends React.Component {
             timestamp: wxObj.timestamp,
             nonceStr: wxObj.nonceStr,
             signature: wxObj.signature,
-            jsApiList: ['scanQRCode', 'getLocation']
+            jsApiList: ['scanQRCode', 'getLocation', 'chooseImage', 'getLocalImgData', 'uploadImage']
           })
         } else {
           Toast.info(data.errmsg)
@@ -96,7 +96,7 @@ class CoreLayout extends React.Component {
       }
     })
     WX.error(function (res) {
-      Toast.info('失败')
+      Toast.info('异常！刷新重试')
       console.log(res)
     })
   }

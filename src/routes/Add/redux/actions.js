@@ -23,7 +23,7 @@ export const create_plant = (params) => {
     const formData = {
       plant_name: params.plant_name,
       system_size: params.system_size,
-      feed_in_teriff: params.feed_in_teriff,
+      feed_in_tariff: params.feed_in_tariff,
       currency: currency[params.currency[0]],
       module_sn: params.module_sn,
       plant_latitude: params.plant_latitude,

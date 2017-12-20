@@ -145,4 +145,16 @@ Service.getLocationList = (params) => {
   return Http.post(url, params, null)
 }
 
+// 修改电站信息
+Service.editPlantInfo = (params) => {
+  const url = `${window.dataUrl}/plant/plant/update`
+  return Http.post(url, params, null)
+}
+
+// 上传修改图片
+Service.uploadImg = (params) => {
+  const url = `${window.dataUrl}/base/attachment/upload`
+  return Http.post(url, params, null)
+}
+
 export default Service

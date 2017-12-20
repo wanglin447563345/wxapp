@@ -6,8 +6,8 @@ const httpUtil = {}
 httpUtil.post = (url, params, headers = {}) => {
   const userInfo = JSON.parse(Util.getCookie('user_info') || '{}')
   headers = { ...headers,
-    // 'X-Exxdata-Token': userInfo.token
-    'X-Exxdata-Token': '45372c33c269a6f7ff9afe495b79819a'
+    'X-Exxdata-Token': userInfo.token
+    // 'X-Exxdata-Token': '45372c33c269a6f7ff9afe495b79819a'
   }
   let formData = new FormData()
   for (let k in params) {

@@ -51,3 +51,21 @@
     }
   }
 }
+.price{
+  display: flex;
+  div{
+    .am-list-item{
+      padding-left: 0;
+      .am-list-line{
+        .am-list-extra{
+          flex-basis: 100%;
+          width:41px;
+          text-align: center;
+        }
+        .am-list-item.am-input-item{
+          width: 100%;
+        }
+      }
+    }
+  }
+}

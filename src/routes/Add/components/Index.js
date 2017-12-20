@@ -169,7 +169,7 @@ class AddForm extends Component {
         <WhiteSpace />
         <div className='price'>
           <InputItem
-              {...getFieldProps('feed_in_teriff', {
+              {...getFieldProps('feed_in_tariff', {
                 initialValue: '',
                 rules: [
                   {
